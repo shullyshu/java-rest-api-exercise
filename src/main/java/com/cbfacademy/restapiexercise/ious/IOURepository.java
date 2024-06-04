@@ -3,13 +3,16 @@ package com.cbfacademy.restapiexercise.ious;
 import java.util.List;
 import java.util.UUID;
 
-import com.cbfacademy.restapiexercise.core.Repository;
+import org.springframework.data.repository.ListCrudRepository;
+
+
+// import com.cbfacademy.restapiexercise.core.Repository;
 
 /**
  * The IOURepository interface defines the operations for managing IOUs in the system.
  * It provides methods for retrieving, saving, updating, and deleting IOU records.
  */
-public interface IOURepository extends Repository<IOU, UUID> {
+public interface IOURepository extends ListCrudRepository<IOU, UUID> {
 
     /**
      * Searches for IOUs where the borrower's name matches the provided string.

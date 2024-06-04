@@ -1,0 +1,16 @@
+
+POST: localhost:8080/api/ious
+{
+  "id": "d1415cfc-dbd9-4474-94fc-52e194e384fa",
+  "borrower": "Shulammite Michael",
+  "lender": "Ruth Smith",
+  "amount": 50.0,
+  "dateTime": "2024-05-16T14:30:00Z"
+}
+
+GET: localhost:8080/api/ious/
+GET: localhost:8080/api/ious/ef224679-f3cf-4073-825a-6cb8c9f8135f
+PUT: localhost:8080/api/ious/ef224679-f3cf-4073-825a-6cb8c9f8135f
+
+use restapiexercise;
+select * from ious;

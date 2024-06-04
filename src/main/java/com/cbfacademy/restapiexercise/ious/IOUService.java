@@ -1,47 +1,49 @@
 package com.cbfacademy.restapiexercise.ious;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
-public interface IOUService {
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.stereotype.Service;
 
-    /**
-     * Retrieve a list of all IOUs.
-     *
-     * @return A list of all IOUs.
-     */
-    List<IOU> getAllIOUs();
+@Service
+public class IOUService {
+    private IOURepository iouRepository;
 
-    /**
-     * Retrieve an IOU by its ID.
-     *
-     * @param id The ID of the IOU to retrieve.
-     * @return The IOU with the specified ID, or null if not found.
-     */
-    IOU getIOU(UUID id);
+    public IOUService(IOURepository iouRepository){
+        this.iouRepository = iouRepository;
+    }
 
-    /**
-     * Create a new IOU.
-     *
-     * @param iou The IOU object to create.
-     * @return The created IOU.
-     */
-    IOU createIOU(IOU iou);
+    public IOU createIOU(IOU iou) throws IllegalArgumentException, OptimisticLockingFailureException {
+        return iouRepository.save(iou);
+    }
 
-    /**
-     * Update an existing IOU by its ID.
-     *
-     * @param id         The ID of the IOU to update.
-     * @param updatedIOU The updated IOU object.
-     * @return The updated IOU, or null if the ID is not found.
-     */
-    IOU updateIOU(UUID id, IOU updatedIOU);
+    public void deleteIOU(UUID id) throws NoSuchElementException {
+        if (iouRepository.findById(id).isPresent()) {
+            iouRepository.deleteById(id);
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
 
-    /**
-     * Delete an IOU by its ID.
-     *
-     * @param id The ID of the IOU to delete.
-     */
-    void deleteIOU(UUID id);
+    public List<IOU> getAllIOUs() {
+        return iouRepository.findAll();
+    }
 
+    public IOU getIOU(UUID id) throws NoSuchElementException {
+        return iouRepository.findById(id).orElseThrow();
+    }
+
+    public IOU updateIOU(UUID id, IOU updatedIOU) throws NoSuchElementException {
+        IOU iou = iouRepository.findById(id).orElseThrow(); // find the IOU
+
+        // old IOU values = new IOU values
+        iou.setBorrower(updatedIOU.getBorrower());
+        iou.setLender(updatedIOU.getLender());
+        iou.setAmount(updatedIOU.getAmount());
+        
+        // save the updated IOU
+        return iouRepository.save(iou);
+    }
 }
