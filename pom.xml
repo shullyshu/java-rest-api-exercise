@@ -46,6 +46,10 @@
 			<artifactId>mockito-core</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- <dependency>
+			<groupid>org.springframework.boot</groupid>
+			<artifactid>spring-boot-starter-data-mongodb</artifactid>
+		</dependency> -->
 	</dependencies>
 
 	<build>

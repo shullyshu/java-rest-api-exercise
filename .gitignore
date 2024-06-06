@@ -60,3 +60,7 @@ build/
 
 ### Temp files and logs ###
 TEMP.md
+
+### Resources file
+# /src/main/resources/local.properties
+local.properties
